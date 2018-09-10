@@ -1,0 +1,44 @@
+﻿@model VideoShare.PL.Models.VideoViewModel
+@{
+    ViewBag.Title = "AddVideo";
+}
+@Styles.Render("~/Content/dropzonecss")
+
+<h2>AddingVideo</h2>
+
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-md-3 col-md-offset-2">
+            <form action="~/Video/UploadVideo" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm">
+                <div class="fallback">
+                    <input name="file" type="file" multiple />
+                    <input type="submit" value="Upload" />
+                </div>
+            </form>
+            
+        </div>
+        <div class="col-md-7">
+            @using (@Html.BeginForm("SaveVideo", "Video", FormMethod.Post, new { onsubmit = "addFileNameToInput()" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group">                           
+                    <div class="col-md-6 col-md-offset-3">
+                        @Html.LabelFor(m => m.Name, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control modal-input" } })
+                        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                        @Html.LabelFor(m => m.Description, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(m=>m.PlaylistId)
+                        <textarea class="form-control textarea-input" name="Description"></textarea>
+                        @Html.EditorFor(m=>m.FileName)
+                        <input type="submit"  class="modal-input btn-default"  value="Save" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/dropzonescripts")
+    @Scripts.Render("~/Scripts/VideoDropzoneUploader.js")
+    @Scripts.Render("~/Scripts/AddFileName.js")
+}

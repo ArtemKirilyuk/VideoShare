@@ -1,0 +1,34 @@
+﻿@model VideoShare.PL.Models.VideoViewModel
+
+@{
+    ViewBag.Title = "Video";
+}
+
+<h2>PlayVideo</h2>
+<style>
+    .invisible {
+        display: none;
+    }
+</style>
+
+<div class="row">
+    <video width="700" controls>
+        <source src="@Model.Path" type="video/mp4">
+    </video>
+</div>
+
+@using (Ajax.BeginForm("AddLike", "Video", new AjaxOptions { UpdateTargetId = "likes-count" }))
+{
+    <input type="image" id="empty-like" name="submit" src="~/Content/Images/LikeEmpty.png" border="0" alt="Submit" />
+}
+@using (Ajax.BeginForm("RemoveLike", "Video", new AjaxOptions { UpdateTargetId = "count" }))
+{
+    <input type="image" id="full-like" name="submit" src="~/Content/Images/LikeFull.png" border="0" alt="Submit" />
+}
+<div id="likes-count">
+    <p>
+        @Model.LikesCount
+    </p>
+</div>
+
+

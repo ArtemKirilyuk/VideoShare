@@ -1,0 +1,34 @@
+﻿@model VideoShare.PL.Models.PlaylistsViewModel
+
+@{
+    ViewBag.Title = "Playlists";
+}
+@Styles.Render("~/Content/Site.css")
+
+<h2>Playlists</h2>
+<div class="row control-menu">
+    @Html.ActionLink("Create", "AddPlaylist", new { }, new { @class = "btn btn-default playlist-create", id = "btn-create-playlist" })
+</div>
+<div class="row line-container">
+    @foreach (var item in Model.Playlists)
+    {
+        <div class="col-md-3">
+            @Html.ActionLink("X", "DeletePlaylist", "Playlist", new { playlistId = @item.Id }, new { @class = "btn btn-default" })
+            <a href="@Url.Action("PlaylistConcrete", "Playlist", new { playlistId = @item.Id })">
+                <img class="video-image" src="~/Content/Images/DefaultPlaylist.png" alt="@item.Name" />
+                <p>@item.Name</p>
+            </a>
+        </div>
+    }
+</div>
+
+<div id="playlist-create" class="modal fade">
+    <div id="dialogContent" class="modal-dialog modal-sm">
+    </div>
+</div>
+
+@section scripts{
+   @Scripts.Render("~/scripts/modalWin.js")
+}
+
+

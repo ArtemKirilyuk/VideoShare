@@ -1,0 +1,20 @@
+﻿@model VideoShare.PL.Models.PlaylistConcreteViewModel
+
+<div class="modal-content">
+    <div class="modal-header">
+        <input type="button" class="close" data-dismiss="modal" value="X" />
+        <h4>Add playlist</h4>
+    </div>
+    <div class="modal-body">
+        @using (@Html.BeginForm("AddPlaylist", "Playlist", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <p style="display:none" id="playlist-form"></p>
+            <p class="text-info">Name</p>
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger", @name = "Name" })
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control modal-input", id = "playlistName", @name = "Name" } })            
+            <p class="text-info">Description</p>
+            <textarea class="form-control modal-input" name="Description"></textarea>
+        }
+    </div>
+</div>

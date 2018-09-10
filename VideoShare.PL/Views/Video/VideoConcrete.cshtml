@@ -1,0 +1,42 @@
+﻿@model VideoShare.PL.Models.VideoViewModel
+
+@{
+    ViewBag.Title = "Concrete video";
+}
+
+<h2>PlayVideo</h2>
+<style>
+    .invisible {
+        display: none;
+    }
+</style>
+
+<div>
+    <div class="row">
+        <video width="700" height="350" controls>
+            <source src="@Model.Path" type="video/mp4">
+        </video>
+    </div>
+    <p class="invisible" id="like-state">@Model.Liked</p>
+    <div class="row like-container">
+        @Html.DisplayFor(m => m.Description, new { @class = "text-info col-md-5" })
+        @using (Ajax.BeginForm("ToggleLike", "Video", new AjaxOptions { UpdateTargetId = "count" }, new { id = "like-state-sender", @class = "col-md-1" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.EditorFor(m => m.Id, new { value = Model.Id });
+            @Html.EditorFor(m => m.Liked);
+            <input type="image" width="40" id="empty-like" name="submit" src="~/Content/Images/LikeEmpty.png" border="0" alt="Submit" />
+            <input type="image" width="40" id="full-like" name="submit" src="~/Content/Images/LikeFull.png" border="0" alt="Submit" />
+        }
+        <div id="count" class="col-md-1">
+            <p style="font-size:26px;">
+                @Model.LikesCount
+            </p>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    @Scripts.Render("~/bundles/unobtrusiveajax")
+    @Scripts.Render("~/Scripts/likesScript.js")
+}

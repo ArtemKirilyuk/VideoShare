@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "VideoDeleting";
+}
+
+<h2>VideoDeleting</h2>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <a href=@Url.Action("VideoConcrete", "Video", new { videoId = item.Id })>
+            <div class="col-md-3">
+                @Html.ActionLink("X", "DeleteVideo", "Video", new { videoId = @item.Id }, new {@class="btn btn-default" })
+                <img class="video-image" src="~/Content/Images/DefaultVideo.png" alt="@item.Name" />
+                <p>@item.Name</p>
+            </div>                
+        </a>
+    }
+</div>

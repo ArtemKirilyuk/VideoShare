@@ -1,0 +1,32 @@
+﻿@model VideoShare.PL.Models.PlaylistConcreteViewModel
+
+@{
+    ViewBag.Title = "Playlist";
+}
+
+@Styles.Render("~/Content/Site.css")
+@Styles.Render("~/Content/css")
+
+<h2>@Model.Name</h2>
+<div class="row line-container">
+    @using (Html.BeginForm("AddVideo", "Video", FormMethod.Post))
+    {
+        <input type="hidden" name="playlistId" value="@Model.Id" />
+        <input type="submit" value="Add video" class = "btn btn-default video-create" id = "btn-create-video" />
+    }
+</div>
+<div class="row  line-container">
+    <img class="col-md-2 " src="~/Content/Images/DefaultPlaylist.png" alt="@Model.Name" />
+    <p class="col-md-10">@Model.Description</p>
+</div>
+<div class="row">
+    @foreach (var item in Model.Videos)
+    {
+        <a href=@Url.Action("VideoConcrete", "Video", new { videoId = item.Id } )>
+            <div class="col-md-3">
+                <img class="video-image" src="~/Content/Images/DefaultVideo.png" alt="@item.Name" />
+                <p>@item.Name</p>
+            </div>
+        </a>
+    }
+</div>
